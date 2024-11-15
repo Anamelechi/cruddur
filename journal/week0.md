@@ -108,4 +108,4 @@ aws budgets create-budget \
 
 ### CI/CD logical pipeline architectural diagram
 
-![PDF](_docs/assets/CI%3ACD%20logical%20pipeline%20architectural%20diagram.pdf)
+![PDF](_docs/assets/_docs/assets/CI:CD logical pipeline architectural diagram.pdf)
