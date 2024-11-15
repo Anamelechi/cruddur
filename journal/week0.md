@@ -6,7 +6,7 @@
 
 ° I installed the AWS CLI on the Gitpod environment.
 ° I set the AWS CLI to use partial autoprompt mode to make it easier to debug CLI commands.
-° The bash commands I am using is the same as the [AWS CLI Install Instructions]https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html
+° The bash commands I am using is the same as the [AWS CLI Install Instructions](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
 [](.gitpod.yml) include the following task.
 
 ```sh
@@ -108,4 +108,4 @@ aws budgets create-budget \
 
 ### CI/CD logical pipeline architectural diagram
 
-![](_docs/assets/CI%3ACD%20logical%20pipeline%20architectural%20diagram.pdf)
+![PDF](_docs/assets/CI%3ACD%20logical%20pipeline%20architectural%20diagram.pdf)
