@@ -3,7 +3,7 @@
 ## Containerized the Backend
 ### Ran Python
 
-```
+```sh
 cd backend-flask
 export FRONTEND_URL="*"
 export BACKEND_URL="*"
@@ -18,9 +18,9 @@ cd ..
 
 ### Added Dockerfile
 
-Created a file here: backend-flask/Dockerfile
+Created a file here: /backend-flask/Dockerfile
 
-```
+```sh
 FROM python:3.10-slim-buster
 
 WORKDIR /backend-flask
