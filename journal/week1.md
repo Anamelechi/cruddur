@@ -159,7 +159,7 @@ Since Postgres and Dynamodb are going to be containers I integrated the followin
 
 ### Postgres
 
-```Dockerfile
+```yaml
 
 services:
   db:
@@ -193,7 +193,7 @@ Installed the postgres client into Gitpod
 
 ### DynamoDB Local
 
-```Dockerfile
+```yaml
 
 services:
   dynamodb-local:
