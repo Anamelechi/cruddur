@@ -12,9 +12,11 @@ cd ..
 
 ```
 
-° I unlocked the port on the exposed port tab
-° Open the link for 4567 in your browser
-° Append the url to ```/api/activities/home``` and i got back json
+- I unlocked the port on the exposed port tab
+
+- Open the link for 4567 in your browser
+
+- Append the url to ```/api/activities/home``` and i got back json
 
 ### Added Dockerfile
 
