@@ -14,11 +14,11 @@ cd ..
 
 ° I unlocked the port on the exposed port tab
 ° Open the link for 4567 in your browser
-° Append the url to /api/activities/home and i got back json
+° Append the url to ```/api/activities/home``` and i got back json
 
 ### Added Dockerfile
 
-Created a file here: /backend-flask/Dockerfile
+Created a file here: ```backend-flask/Dockerfile```
 
 ```sh
 FROM python:3.10-slim-buster
@@ -39,7 +39,7 @@ CMD [ "python3", "-m" , "flask", "run", "--host=0.0.0.0", "--port=4567"]
 
 ### Built Container
 
-```
+```sh
 
 docker build -t  backend-flask ./backend-flask
 
@@ -47,14 +47,14 @@ docker build -t  backend-flask ./backend-flask
 
 ### Ran Container
 
-```
+```sh
 docker run --rm -p 4567:4567 -it -e FRONTEND_URL='*' -e BACKEND_URL='*' backend-flask
 
 ```
 
 ### Checked Container Images or Running Container Ids
 
-```
+```sh
 
 docker ps
 docker images
@@ -63,7 +63,7 @@ docker images
 
 ### Gained access to the Container
 
-```
+```sh
 
 docker exec CONTAINER_ID -it /bin/bash
 
@@ -75,7 +75,7 @@ docker exec CONTAINER_ID -it /bin/bash
 
 I had to run NPM Install before building the container since it needs to copy the contents of node_modules 
 
-```
+```sh
 
 cd frontend-react-js
 npm i
@@ -84,9 +84,9 @@ npm i
 
 ### Created Docker File
 
-Created a file here: frontend-react-js/Dockerfile
+Created a file here: ```frontend-react-js/Dockerfile```
 
-```
+```sh
 
 FROM node:16.18
 
@@ -102,7 +102,7 @@ CMD ["npm", "start"]
 
 ### Built Container
 
-```
+```sh
 
 docker build -t frontend-react-js ./frontend-react-js
 
@@ -110,7 +110,7 @@ docker build -t frontend-react-js ./frontend-react-js
 
 ### Ran Container
 
-```
+```sh
 docker run -p 3000:3000 -d frontend-react-js
 
 ```
@@ -119,9 +119,10 @@ docker run -p 3000:3000 -d frontend-react-js
 
 ### Created a docker-compose file
 
-Created docker-compose.yml at the root of my project.
+Created ```docker-compose.yml``` at the root of my project.
 
-```
+```sh
+
 version: "3.8"
 services:
   backend-flask:
@@ -156,7 +157,7 @@ Since Postgres and Dynamodb are going to be containers I integrated the followin
 
 ### Postgres
 
-```
+```sh
 
 services:
   db:
@@ -177,7 +178,7 @@ volumes:
 
 Installed the postgres client into Gitpod
 
-```
+```sh
 
   - name: postgres
     init: |
@@ -190,7 +191,7 @@ Installed the postgres client into Gitpod
 
 ### DynamoDB Local
 
-```
+```sh
 
 services:
   dynamodb-local:
@@ -212,7 +213,8 @@ services:
 
 directory volume mapping
 
-```
+```sh
+
 volumes: 
 - "./docker/dynamodb:/home/dynamodblocal/data"
 
@@ -220,7 +222,7 @@ volumes:
 
 named volume mapping
 
-```
+```sh
 
 volumes: 
   - db:/var/lib/postgresql/data
