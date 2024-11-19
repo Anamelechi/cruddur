@@ -215,7 +215,7 @@ services:
 
 directory volume mapping
 
-```Dockerfile
+```yaml
 
 volumes: 
 - "./docker/dynamodb:/home/dynamodblocal/data"
@@ -224,7 +224,7 @@ volumes:
 
 named volume mapping
 
-```Dockerfile
+```yaml
 
 volumes: 
   - db:/var/lib/postgresql/data
