@@ -3,7 +3,7 @@
 ## Containerized the Backend
 ### Ran Python
 
-```sh
+```python
 cd backend-flask
 export FRONTEND_URL="*"
 export BACKEND_URL="*"
@@ -22,7 +22,7 @@ cd ..
 
 Created a file here: ```backend-flask/Dockerfile```
 
-```sh
+```Dockerfile
 FROM python:3.10-slim-buster
 
 WORKDIR /backend-flask
@@ -88,7 +88,7 @@ npm i
 
 Created a file here: ```frontend-react-js/Dockerfile```
 
-```sh
+```Dockerfile
 
 FROM node:16.18
 
@@ -123,7 +123,7 @@ docker run -p 3000:3000 -d frontend-react-js
 
 Created ```docker-compose.yml``` at the root of my project.
 
-```sh
+```yaml
 
 version: "3.8"
 services:
@@ -159,7 +159,7 @@ Since Postgres and Dynamodb are going to be containers I integrated the followin
 
 ### Postgres
 
-```sh
+```Dockerfile
 
 services:
   db:
@@ -193,7 +193,7 @@ Installed the postgres client into Gitpod
 
 ### DynamoDB Local
 
-```sh
+```Dockerfile
 
 services:
   dynamodb-local:
@@ -215,7 +215,7 @@ services:
 
 directory volume mapping
 
-```sh
+```Dockerfile
 
 volumes: 
 - "./docker/dynamodb:/home/dynamodblocal/data"
@@ -224,7 +224,7 @@ volumes:
 
 named volume mapping
 
-```sh
+```Dockerfile
 
 volumes: 
   - db:/var/lib/postgresql/data
