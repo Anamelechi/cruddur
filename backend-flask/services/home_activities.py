@@ -5,10 +5,12 @@ tracer = trace.get_tracer("home.activities")
 
 class HomeActivities:
   def run():
-    with tracer.start_as_current_span("home-activities-data"):
 
-    now = datetime.now(timezone.utc).astimezone()
-    results = [{
+    with tracer.start_as_current_span("home.activities"):
+      span = trace.get_current_span()
+      now = datetime.now(timezone.utc).astimezone()
+      span.set_attribute("app.now", now.isoformat())
+      results = [{
       'uuid': '68f126b0-1ceb-4a33-88be-d90fa7109eee',
       'handle':  'Anamelechi',
       'message': 'Cloud is the future!',
@@ -47,4 +49,6 @@ class HomeActivities:
       'replies': []
     }
     ]
+      span.set_attribute("app.results_length", len(results))
     return results
+ 
