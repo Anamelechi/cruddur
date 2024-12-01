@@ -1,7 +1,15 @@
 from datetime import datetime, timedelta, timezone
 class NotificationsActivities:
   def run():
+    with xray_recorder.in_segment('notifications_activities') as segment:
+
     now = datetime.now(timezone.utc).astimezone()
+dict = {
+"now" :now.isoformat()
+  }
+
+     segment.put_metadata('key', dict, 'namespace')
+
     results = [{
       'uuid': '68f126b0-1ceb-4a33-88be-d90fa7109eee',
       'handle':  'PPK',
