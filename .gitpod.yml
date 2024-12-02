@@ -21,7 +21,7 @@ tasks:
 vscode:
   extensions:
     - 42Crunch.vscode-openapi
-    
+    - ms-python.python
     - cweijan.vscode-postgresql-client2
 
 ports:
