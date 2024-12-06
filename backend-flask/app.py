@@ -51,7 +51,7 @@ tracer = trace.get_tracer(__name__)
 #xray_recorder.configure(service='backend-flask', dynamic_naming=xray_url)
 
 app = Flask(__name__)
-XRayMiddleware(app, xray_recorder)
+#XRayMiddleware(app, xray_recorder)
 
 # HoneyComb
 FlaskInstrumentor().instrument_app(app)
