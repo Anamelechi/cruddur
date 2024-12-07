@@ -5,6 +5,10 @@ from datetime import datetime, timedelta, timezone
 import watchtower
 import logging
 from time import strftime
+#ROLLBAR
+import rollbar
+import rollbar.contrib.flask
+from flask import got_request_exception
 
 from services.home_activities import HomeActivities
 from services.notifications_activities import NotificationsActivities
@@ -67,6 +71,41 @@ cors = CORS(
     allow_headers="content-type,if-modified-since",
     methods="OPTIONS,GET,HEAD,POST"
 )
+
+#ROLLBAR
+## XXX hack to make request data work with pyrollbar <= 0.16.3
+def _get_flask_request():
+    print("Getting flask request")
+    from flask import request
+    print("request:", request)
+    return request
+rollbar._get_flask_request = _get_flask_request
+
+def _build_request_data(request):
+    return rollbar._build_werkzeug_request_data(request)
+rollbar._build_request_data = _build_request_data
+## XXX end hack
+
+def init_rollbar(app):
+  rollbar_access_token = os.getenv('ROLLBAR_ACCESS_TOKEN')
+  flask_env = os.getenv('FLASK_ENV')
+  rollbar.init(
+      # access token
+      rollbar_access_token,
+      # environment name
+      flask_env,
+      # server root directory, makes tracebacks prettier
+      root=os.path.dirname(os.path.realpath(__file__)),
+      # flask already sets up logging
+      allow_logging_basic_config=False)
+  # send exceptions from `app` to rollbar, using flask's signal system.
+  got_request_exception.connect(rollbar.contrib.flask.report_exception, app)
+
+#ROLLBAR TEST
+@app.route('/rollbar/test')
+def rollbar_test():
+    rollbar.report_message('Hello World!', 'warning')
+    return "Hello World!"
 
 #@app.after_request
 #def after_request(response):
@@ -161,4 +200,5 @@ def data_activities_reply(activity_uuid):
         return model['data'], 200
 
 if __name__ == "__main__":
+    init_rollbar(app)
     app.run(debug=True)
