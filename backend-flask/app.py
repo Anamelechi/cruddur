@@ -1,14 +1,8 @@
-from flask import Flask, request
+from flask import Flask
+from flask import request
 from flask_cors import CORS, cross_origin
 import os
 from datetime import datetime, timedelta, timezone
-import watchtower
-import logging
-from time import strftime
-#ROLLBAR
-import rollbar
-import rollbar.contrib.flask
-from flask import got_request_exception
 
 from services.home_activities import HomeActivities
 from services.notifications_activities import NotificationsActivities
@@ -20,13 +14,26 @@ from services.message_groups import MessageGroups
 from services.messages import Messages
 from services.create_message import CreateMessage
 from services.show_activity import ShowActivities
-# HoneyComb
+
+# HoneyComb ---------
 from opentelemetry import trace
 from opentelemetry.instrumentation.flask import FlaskInstrumentor
 from opentelemetry.instrumentation.requests import RequestsInstrumentor
 from opentelemetry.exporter.otlp.proto.http.trace_exporter import OTLPSpanExporter
 from opentelemetry.sdk.trace import TracerProvider
 from opentelemetry.sdk.trace.export import BatchSpanProcessor, ConsoleSpanExporter, SimpleSpanProcessor
+
+
+# CloudWatch Logs ----
+import watchtower
+import logging
+
+# Rollbar ------
+from time import strftime
+import os
+import rollbar
+import rollbar.contrib.flask
+from flask import got_request_exception
 
 # X-RAY
 #from aws_xray_sdk.core import xray_recorder
@@ -45,8 +52,11 @@ from opentelemetry.sdk.trace.export import BatchSpanProcessor, ConsoleSpanExport
 provider = TracerProvider()
 processor = BatchSpanProcessor(OTLPSpanExporter())
 provider.add_span_processor(processor)
-simple_processor = SimpleSpanProcessor(ConsoleSpanExporter())
-provider.add_span_processor(simple_processor)
+
+# Show this in the logs within the backend-flask app (STDOUT)
+#simple_processor = SimpleSpanProcessor(ConsoleSpanExporter())
+#provider.add_span_processor(simple_processor)
+
 trace.set_tracer_provider(provider)
 tracer = trace.get_tracer(__name__)
 
