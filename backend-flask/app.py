@@ -2,18 +2,17 @@ from flask import Flask
 from flask import request
 from flask_cors import CORS, cross_origin
 import os
-from datetime import datetime, timedelta, timezone
 
-from services.home_activities import HomeActivities
-from services.notifications_activities import NotificationsActivities
-from services.user_activities import UserActivities
-from services.create_activity import CreateActivity
-from services.create_reply import CreateReply
-from services.search_activities import SearchActivities
-from services.message_groups import MessageGroups
-from services.messages import Messages
-from services.create_message import CreateMessage
-from services.show_activity import ShowActivities
+from services.home_activities import *
+from services.notifications_activities import *
+from services.user_activities import *
+from services.create_activity import *
+from services.create_reply import *
+from services.search_activities import *
+from services.message_groups import *
+from services.messages import *
+from services.create_message import *
+from services.show_activity import *
 
 # HoneyComb ---------
 from opentelemetry import trace
@@ -136,11 +135,13 @@ def data_message_groups():
 def data_messages(handle):
     user_sender_handle = 'andrewbrown'
     user_receiver_handle = request.args.get('user_receiver_handle')
+    
     model = Messages.run(user_sender_handle=user_sender_handle, user_receiver_handle=user_receiver_handle)
     if model['errors'] is not None:
         return model['errors'], 422
     else:
         return model['data'], 200
+    return
 
 @app.route("/api/messages", methods=['POST', 'OPTIONS'])
 @cross_origin()
@@ -148,15 +149,17 @@ def data_create_message():
     user_sender_handle = 'andrewbrown'
     user_receiver_handle = request.json['user_receiver_handle']
     message = request.json['message']
+    
     model = CreateMessage.run(message=message, user_sender_handle=user_sender_handle, user_receiver_handle=user_receiver_handle)
     if model['errors'] is not None:
         return model['errors'], 422
     else:
         return model['data'], 200
+    return
 
 @app.route("/api/activities/home", methods=['GET'])
 def data_home():
-    data = HomeActivities.run(logger=LOGGER)
+    data = HomeActivities.run()
     return data, 200
 
 @app.route("/api/activities/notifications", methods=['GET'])
@@ -171,6 +174,8 @@ def data_handle(handle):
         return model['errors'], 422
     else:
         return model['data'], 200
+    return
+
 
 @app.route("/api/activities/search", methods=['GET'])
 def data_search():
@@ -180,6 +185,8 @@ def data_search():
         return model['errors'], 422
     else:
         return model['data'], 200
+    return
+
 
 @app.route("/api/activities", methods=['POST', 'OPTIONS'])
 @cross_origin()
@@ -192,6 +199,8 @@ def data_activities():
         return model['errors'], 422
     else:
         return model['data'], 200
+    return
+
 
 @app.route("/api/activities/<string:activity_uuid>", methods=['GET'])
 def data_show_activity(activity_uuid):
@@ -208,7 +217,8 @@ def data_activities_reply(activity_uuid):
         return model['errors'], 422
     else:
         return model['data'], 200
+    return
+
 
 if __name__ == "__main__":
-    init_rollbar(app)
     app.run(debug=True)

@@ -17,7 +17,6 @@ services:
       - "4567:4567"
     volumes:
       - ./backend-flask:/backend-flask
-
   frontend-react-js:
     environment:
       REACT_APP_BACKEND_URL: "https://4567-${GITPOD_WORKSPACE_ID}.${GITPOD_WORKSPACE_CLUSTER_HOST}"
@@ -26,7 +25,6 @@ services:
       - "3000:3000"
     volumes:
       - ./frontend-react-js:/frontend-react-js
-
   xray-daemon:
     image: "amazon/aws-xray-daemon"
     environment:
@@ -37,7 +35,6 @@ services:
       - "xray -o -b xray-daemon:2000"
     ports:
       - 2000:2000/udp
-
   dynamodb-local:
     user: root
     command: "-jar DynamoDBLocal.jar -sharedDb -dbPath ./data"
@@ -48,7 +45,6 @@ services:
     volumes:
       - "./docker/dynamodb:/home/dynamodblocal/data"
     working_dir: /home/dynamodblocal
-
   db:
     image: postgres:13-alpine
     restart: always
@@ -59,12 +55,10 @@ services:
       - '5432:5432'
     volumes: 
       - db:/var/lib/postgresql/data
-
 networks: 
   internal-network:
     driver: bridge
     name: cruddur
-
 volumes:
   db:
     driver: local
