@@ -1,4 +1,10 @@
 import './App.css';
+import React from 'react';
+import { createRoot } from 'react-dom/client';
+import {
+  createBrowserRouter,
+  RouterProvider
+} from 'react-router-dom';
 
 import HomeFeedPage from './pages/HomeFeedPage';
 import NotificationsFeedPage from './pages/NotificationsFeedPage';
@@ -9,48 +15,52 @@ import RecoverPage from './pages/RecoverPage';
 import MessageGroupsPage from './pages/MessageGroupsPage';
 import MessageGroupPage from './pages/MessageGroupPage';
 import ConfirmationPage from './pages/ConfirmationPage';
-import React from 'react';
+import * as Sentry from '@sentry/react';
 
-import {
-  createBrowserRouter,
-  RouterProvider
-} from "react-router-dom";
+Sentry.init({
+  dsn: 'https://5af0533e211a46dfae208b7f2ffc21dd@o4508444987097088.ingest.de.sentry.io/4508445447684176',
+  integrations: [],
+});
+
+const container = document.getElementById('app');
+const root = createRoot(container);
+root.render(<App />);
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: '/',
     element: <HomeFeedPage />
   },
   {
-    path: "/notification",
+    path: '/notification',
     element: <NotificationsFeedPage />
   },
   {
-    path: "/@:handle",
+    path: '/@:handle',
     element: <UserFeedPage />
   },
   {
-    path: "/messages",
+    path: '/messages',
     element: <MessageGroupsPage />
   },
   {
-    path: "/messages/@:handle",
+    path: '/messages/@:handle',
     element: <MessageGroupPage />
   },
   {
-    path: "/signup",
+    path: '/signup',
     element: <SignupPage />
   },
   {
-    path: "/signin",
+    path: '/signin',
     element: <SigninPage />
   },
   {
-    path: "/confirm",
+    path: '/confirm',
     element: <ConfirmationPage />
   },
   {
-    path: "/forgot",
+    path: '/forgot',
     element: <RecoverPage />
   }
 ]);
