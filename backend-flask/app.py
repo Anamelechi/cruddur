@@ -52,6 +52,7 @@ provider = TracerProvider()
 processor = BatchSpanProcessor(OTLPSpanExporter())
 provider.add_span_processor(processor)
 
+#OTEL
 # Show this in the logs within the backend-flask app (STDOUT)
 #simple_processor = SimpleSpanProcessor(ConsoleSpanExporter())
 #provider.add_span_processor(simple_processor)
@@ -102,6 +103,7 @@ def hello_world():
     1/0  # raises an error
     return "<p>Hello, World!</p>"
 
+#CloudWatch logs
 #@app.after_request
 #def after_request(response):
  #   timestamp = strftime('[%Y-%b-%d %H:%M]')
