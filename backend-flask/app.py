@@ -27,12 +27,12 @@ from opentelemetry.sdk.trace.export import BatchSpanProcessor, ConsoleSpanExport
 import watchtower
 import logging
 
-# Rollbar ------
+# Sentry ------
 from time import strftime
 import os
-import rollbar
-import rollbar.contrib.flask
-from flask import got_request_exception
+import sentry_sdk
+from flask import Flask
+
 
 # X-RAY
 #from aws_xray_sdk.core import xray_recorder
@@ -81,40 +81,26 @@ cors = CORS(
     methods="OPTIONS,GET,HEAD,POST"
 )
 
-#ROLLBAR
-## XXX hack to make request data work with pyrollbar <= 0.16.3
-def _get_flask_request():
-    print("Getting flask request")
-    from flask import request
-    print("request:", request)
-    return request
-rollbar._get_flask_request = _get_flask_request
+#SENTRY
 
-def _build_request_data(request):
-    return rollbar._build_werkzeug_request_data(request)
-rollbar._build_request_data = _build_request_data
-## XXX end hack
+sentry_sdk.init(
+    dsn="https://db0e40dcaf18087a90c5d5fc20551c54@o4508444987097088.ingest.de.sentry.io/4508445037428816",
+    # Set traces_sample_rate to 1.0 to capture 100%
+    # of transactions for tracing.
+    traces_sample_rate=1.0,
+    _experiments={
+        # Set continuous_profiling_auto_start to True
+        # to automatically start the profiler on when
+        # possible.
+        "continuous_profiling_auto_start": True,
+}
+)
 
-def init_rollbar(app):
-  rollbar_access_token = os.getenv('ROLLBAR_ACCESS_TOKEN')
-  flask_env = os.getenv('FLASK_ENV')
-  rollbar.init(
-      # access token
-      rollbar_access_token,
-      # environment name
-      flask_env,
-      # server root directory, makes tracebacks prettier
-      root=os.path.dirname(os.path.realpath(__file__)),
-      # flask already sets up logging
-      allow_logging_basic_config=False)
-  # send exceptions from `app` to rollbar, using flask's signal system.
-  got_request_exception.connect(rollbar.contrib.flask.report_exception, app)
-
-#ROLLBAR TEST
-@app.route('/rollbar/test')
-def rollbar_test():
-    rollbar.report_message('Hello World!', 'warning')
-    return "Hello World!"
+#SENTRY TEST
+@app.route('/sentry/test')
+def hello_world():
+    1/0  # raises an error
+    return "<p>Hello, World!</p>"
 
 #@app.after_request
 #def after_request(response):
@@ -204,7 +190,7 @@ def data_activities():
 
 @app.route("/api/activities/<string:activity_uuid>", methods=['GET'])
 def data_show_activity(activity_uuid):
-    data = ShowActivity.run(activity_uuid=activity_uuid)
+    data = ShowActivities.run(activity_uuid=activity_uuid)
     return data, 200
 
 @app.route("/api/activities/<string:activity_uuid>/reply", methods=['POST', 'OPTIONS'])
