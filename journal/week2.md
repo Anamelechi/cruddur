@@ -261,9 +261,10 @@ Set the env var in your backend-flask for ```docker-compose.yml```
 
 ```
 
-Rollbar kept failing to integrate with my app to i decided to use Sentry
-
 ## Sentry
+
+Rollbar kept failing to integrate with my app so i decided to use Sentry because it proved to be more effective
+
 ### For backend error logging and tracing
 
 https://sentry.io/
