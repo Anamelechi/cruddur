@@ -4,10 +4,11 @@
   "private": true,
   "dependencies": {
     "@sentry/cli": "^2.39.1",
-    "@sentry/react": "^8.43.0",
+    "@sentry/react": "^8.45.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "glob": "^11.0.0",
     "js-cookie": "^3.0.1",
     "luxon": "^3.1.0",
     "process": "^0.11.10",
@@ -22,7 +23,7 @@
     "build": "react-scripts build && npm run sentry:sourcemaps",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "sentry:sourcemaps": "sentry-cli sourcemaps inject --org anamelecchi --project javascript-react frontend-react-js/package.json && sentry-cli sourcemaps upload --org anamelecchi --project javascript-react frontend-react-js/package.json"
+    "sentry:sourcemaps": "sentry-cli sourcemaps inject --org anamelecchi --project javascript-react package.json && sentry-cli sourcemaps upload --org anamelecchi --project javascript-react package.json"
   },
   "eslintConfig": {
     "extends": [
