@@ -1,10 +1,4 @@
 import './App.css';
-import React from 'react';
-import { createRoot } from 'react-dom/client';
-import {
-  createBrowserRouter,
-  RouterProvider
-} from 'react-router-dom';
 
 import HomeFeedPage from './pages/HomeFeedPage';
 import NotificationsFeedPage from './pages/NotificationsFeedPage';
@@ -15,6 +9,12 @@ import RecoverPage from './pages/RecoverPage';
 import MessageGroupsPage from './pages/MessageGroupsPage';
 import MessageGroupPage from './pages/MessageGroupPage';
 import ConfirmationPage from './pages/ConfirmationPage';
+import React from 'react';
+import {
+  createBrowserRouter,
+  RouterProvider
+} from 'react-router-dom';
+
 import * as Sentry from '@sentry/react';
 
 Sentry.init({
@@ -68,9 +68,5 @@ function App() {
     </>
   );
 }
-
-const container = document.getElementById('app');
-const root = createRoot(container);
-root.render(<App />);
 
 export default App;
