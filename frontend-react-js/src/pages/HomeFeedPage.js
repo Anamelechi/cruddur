@@ -9,6 +9,8 @@ import ReplyForm from '../components/ReplyForm';
 
 // [TODO] Authentication
 import Cookies from 'js-cookie';
+// Import the Auth module if it exists
+// import Auth from 'path-to-auth-module'; // Uncomment and ensure the correct path
 
 export default function HomeFeedPage() {
   const [activities, setActivities] = React.useState([]);
@@ -21,17 +23,19 @@ export default function HomeFeedPage() {
   const loadData = async () => {
     try {
       const backend_url = `${process.env.REACT_APP_BACKEND_URL}/api/activities/home`;
+      console.log('Fetching data from:', backend_url);
       const res = await fetch(backend_url, {
         method: "GET"
       });
       let resJson = await res.json();
+      console.log('Response:', resJson);
       if (res.status === 200) {
         setActivities(resJson);
       } else {
-        console.log(res);
+        console.log('Error:', res);
       }
     } catch (err) {
-      console.log(err);
+      console.log('Fetch error:', err);
     }
   };
 
@@ -44,6 +48,13 @@ export default function HomeFeedPage() {
         handle: Cookies.get('user.username')
       });
     }
+    // Uncomment and use if Auth module is available
+    // if (Auth.isLoggedIn()) {
+    //   setUser({
+    //     display_name: Auth.getUserName(),
+    //     handle: Auth.getUserHandle()
+    //   });
+    // }
   };
 
   React.useEffect(() => {
@@ -54,6 +65,10 @@ export default function HomeFeedPage() {
     loadData();
     checkAuth();
   }, []);
+
+  React.useEffect(() => {
+    console.log('Activities:', activities);
+  }, [activities]);
 
   return (
     <article>

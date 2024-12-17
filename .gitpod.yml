@@ -18,9 +18,9 @@ tasks:
     command: |
       cd frontend-react-js
       npm i
+      npm update
       npm install --save @sentry/react
-      npx @sentry/wizard@latest -i sourcemaps
-      y
+      
 vscode:
   extensions:
     - 42Crunch.vscode-openapi
