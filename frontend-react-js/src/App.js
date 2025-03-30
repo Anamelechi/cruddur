@@ -1,6 +1,5 @@
 import './App.css';
 import React from 'react';
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import HomeFeedPage from './pages/HomeFeedPage';
 import UserFeedPage from './pages/UserFeedPage';
@@ -10,7 +9,7 @@ import RecoverPage from './pages/RecoverPage';
 import MessageGroupsPage from './pages/MessageGroupsPage';
 import MessageGroupPage from './pages/MessageGroupPage';
 import ConfirmationPage from './pages/ConfirmationPage';
-
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import * as Sentry from "@sentry/react";
 
 Sentry.init({
